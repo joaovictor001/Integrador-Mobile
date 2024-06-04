@@ -9,32 +9,12 @@ export const Login = () => {
     const [usuario, setUsuario] = useState('');
     const [senha, setSenha] = useState('');
     const navigation = useNavigation();
-    const { token, setToken } = useAuth();
+    const { setToken } = useAuth();
 
-    const obterToken = async () => {
-        try {
-            const response = await axios.post('http://10.0.2.2:8000/api/token', {
-                username: "joaozin_do_grau",
-                password: "123"
-            });
-            const token = response.data.access;
-            console.log(token);
-            setToken(token);
-        } catch (error) {
-            console.error('Erro ao obter token:', error);
-        }
-    };
-
-    useEffect(() => {
-        obterToken();
-    }, []);
+  
 
     const fazerLogin = async () => {
-        if (!token) {
-            console.error('Token não disponível');
-            return;
-        }
-
+        
         try {
             const response = await axios.post(
                 'http://10.0.2.2:8000/api/token',
@@ -42,11 +22,7 @@ export const Login = () => {
                     username: usuario,
                     password: senha
                 },
-                {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }
+                
             );
             const token = response.data.access;
             console.log('Login bem-sucedido:', token);
