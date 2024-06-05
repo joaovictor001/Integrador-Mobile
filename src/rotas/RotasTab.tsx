@@ -1,7 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {Inicial} from '../telas/Inicial'
 import {Usuarios} from '../telas/Usuarios'
-import {AmbientesEquipamentos} from '../telas/AmbientesEquipamentos'
+import { CadastroSensores } from '../telas/CadastroSensores'
 import { Feather } from '@expo/vector-icons'
 
 const { Navigator, Screen } = createBottomTabNavigator()
@@ -44,8 +44,8 @@ export function RotasTab(){
             />
 
             <Screen 
-                name='ambiente'
-                component={AmbientesEquipamentos}
+                name='sensoresCad'
+                component={CadastroSensores}
                 options={{
                     tabBarIcon: ({color, size}) => (
                         <Feather name="map-pin" size={size} color={color} /> 

@@ -9,20 +9,26 @@ export const FormularioUsuario: React.FC = () => {
     const [usuario, setUsuario] = useState('');
     const [senha, setSenha] = useState('');
     const navigation = useNavigation();
-    const { token } = useAuth(); // Usando o contexto de autenticação
+    //useContext
+    const { setToken } = useAuth();
+ // Usando o contexto de autenticação
 
     const fazerCadastro = async () => {
         try {
             // Fazer a requisição de cadastro
             const response = await axios.post(
-                'http://10.0.2.2:8000/api/create_user',
+                'http://10.109.71.21:8082/api/create_user',
                 {
                     username: usuario,
                     password: senha
                 }
             );
 
+
+
             // Se o cadastro for bem-sucedido, navegar para a tela inicial
+            const token = response.data.access;
+            setToken(token)
             navigation.navigate('rotasTab');
         } catch (error) {
             // Se houver um erro no cadastro, você pode exibir uma mensagem de erro

@@ -9,28 +9,26 @@ export const Login = () => {
     const [usuario, setUsuario] = useState('');
     const [senha, setSenha] = useState('');
     const navigation = useNavigation();
-    const { setToken } = useAuth();
+    const { token, setToken } = useAuth();
 
-  
+    
 
     const fazerLogin = async () => {
-        
-        try {
-            const response = await axios.post(
+
+            const response = await axios.post(//http://10.0.2.2:8000/api/sensores/
                 'http://10.0.2.2:8000/api/token',
                 {
                     username: usuario,
                     password: senha
                 },
-                
-            );
-            const token = response.data.access;
-            console.log('Login bem-sucedido:', token);
-            setToken(token); // Atualiza o token no contexto
-            navigation.navigate('Home');
-        } catch (error) {
-            console.error('Erro de login:', error);
-        }
+            ).then(response => {
+                const token2 = response.data.access;
+                setToken(token2);
+                console.log('Login bem-sucedido:', token2);
+                navigation.navigate('rotasTab'); // seta token
+            }).catch(error => {
+                console.error('Erro de login:', error);
+            });
     };
 
     return (
