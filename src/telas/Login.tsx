@@ -1,6 +1,6 @@
 // Login.tsx
 import React, { useState,useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image,Alert } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../componentes/AuthContext';// ajuste o caminho conforme necessário
@@ -28,6 +28,7 @@ export const Login = () => {
                 navigation.navigate('rotasTab'); // seta token
             }).catch(error => {
                 console.error('Erro de login:', error);
+                Alert.alert('Erro', 'Erro ao fazer login');
             });
     };
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../componentes/AuthContext';
@@ -38,10 +38,12 @@ export const CadastroSensores = () => {
     )
     .then(response => {
       console.log('Cadastro bem-sucedido:', response.data);
+      Alert.alert('Cadastrado', 'Sensor cadastrado com sucesso');
       
     })
     .catch(error => {
       console.error('Erro no cadastro:', error);
+      Alert.alert('Erro', 'Erro ao cadastra sensores');
     });
   };
 
@@ -157,4 +159,3 @@ const estilos = StyleSheet.create({
   }
 });
 
-e
