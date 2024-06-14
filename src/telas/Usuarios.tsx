@@ -26,7 +26,6 @@ export const Usuarios = () => {
             />
 
             <FormularioUsuario 
-                adicionar={adicionarUsuario}
             />  
         </View>
     ); 
