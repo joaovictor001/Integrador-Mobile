@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import axios from 'axios';
@@ -10,26 +10,44 @@ export const FormularioUsuario: React.FC = () => {
     const [senha, setSenha] = useState('');
     const navigation = useNavigation();
     //useContext
-    const { setToken } = useAuth();
+    const {token,setToken } = useAuth();
  // Usando o contexto de autenticação
+
+    const obterToken = async () => {
+    try {
+        const response = await axios.post('http://10.0.2.2:8000/api/token', {
+            username: "admuser",
+            password: "1234"
+        });
+        const token2 = response.data.access;
+        console.log(token2);
+        setToken(token2);
+    } catch (error) {
+        console.error('Erro ao obter token:', error);
+    }
+    };
+
+    useEffect(() => {
+        obterToken();
+    }, []);
 
     const fazerCadastro = async () => {
         try {
             // Fazer a requisição de cadastro
             const response = await axios.post(
-                'http://10.109.71.21:8082/api/create_user',
+                'http://10.0.2.2:8000/api/create_user',
                 {
                     username: usuario,
                     password: senha
+                },
+                {
+                    headers:{
+                        Authorization: `Bearer ${token}`
+                    }
                 }
             );
-
-
-
-            // Se o cadastro for bem-sucedido, navegar para a tela inicial
-            const token = response.data.access;
-            setToken(token)
-            navigation.navigate('rotasTab');
+            // Se o cadastro for bem-sucedido, navegar para a tela 
+            navigation.navigate('login');
         } catch (error) {
             // Se houver um erro no cadastro, você pode exibir uma mensagem de erro
             console.error('Erro de cadastro:', error);
